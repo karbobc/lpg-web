@@ -3,7 +3,7 @@ import { message as toast } from "antd";
 import axios, { AxiosResponse } from "axios";
 
 const client = axios.create({
-  baseURL: "/",
+  baseURL: "/api",
   timeout: 1 << 3,
 });
 
