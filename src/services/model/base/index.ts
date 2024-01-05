@@ -4,7 +4,7 @@ export interface ApiResult {
   data?: unknown;
 }
 
-export const RC = {
+export const Rc = {
   OK: "200",
   ABORT: "500",
 };

@@ -1,4 +1,4 @@
-import { ApiResult, RC } from "@/services/model/base";
+import { ApiResult, Rc } from "@/services/model/base";
 import { message as toast } from "antd";
 import axios, { AxiosResponse } from "axios";
 
@@ -27,7 +27,7 @@ client.interceptors.response.use(
       const filename = /filename=([^;]+)/.exec(response.headers["content-disposition"] || "")?.pop() || "";
       if (filename.length === 0) {
         result = {
-          code: RC.ABORT,
+          code: Rc.ABORT,
           message: `文件名${filename}不合法`,
         };
         toast.error(result.message);
@@ -44,7 +44,7 @@ client.interceptors.response.use(
       link.click();
       url.revokeObjectURL(downloadUrl);
       result = {
-        code: RC.OK,
+        code: Rc.OK,
         message: "文件下载成功",
         data: blob,
       };
@@ -62,7 +62,7 @@ client.interceptors.response.use(
       result = response.data;
     }
     // 处理 JSON 响应
-    if (result.code !== RC.OK) {
+    if (result.code !== Rc.OK) {
       toast.error(result.message || "接口请求失败!!!");
     }
     return result as unknown as AxiosResponse<ApiResult>;

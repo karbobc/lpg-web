@@ -52,11 +52,11 @@ const App = () => {
           rules={[
             {
               required: true,
-              message: "居住地址不能为空",
+              message: "现住地址不能为空",
             },
           ]}
         >
-          <Input allowClear prefix={<AiFillHome />} placeholder="请输入居住地址" />
+          <Input allowClear prefix={<AiFillHome />} placeholder="请输入现住地址" />
         </Form.Item>
         <Form.Item
           name="barcode"
