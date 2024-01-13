@@ -1,10 +1,10 @@
-import { ApiResult, Rc } from "@/services/model/base";
+import { ApiResult, Rc } from "@/services/model/response/base";
 import { message as toast } from "antd";
 import axios, { AxiosResponse } from "axios";
 
 const client = axios.create({
   baseURL: "/api",
-  timeout: 1 << 3,
+  timeout: 16 * 1000,
 });
 
 // 请求拦截器
@@ -28,6 +28,7 @@ client.interceptors.response.use(
       if (filename.length === 0) {
         result = {
           code: Rc.ABORT,
+          success: false,
           message: `文件名${filename}不合法`,
         };
         toast.error(result.message);
@@ -45,6 +46,7 @@ client.interceptors.response.use(
       url.revokeObjectURL(downloadUrl);
       result = {
         code: Rc.OK,
+        success: true,
         message: "文件下载成功",
         data: blob,
       };
@@ -62,7 +64,7 @@ client.interceptors.response.use(
       result = response.data;
     }
     // 处理 JSON 响应
-    if (result.code !== Rc.OK) {
+    if (!result.success) {
       toast.error(result.message || "接口请求失败!!!");
     }
     return result as unknown as AxiosResponse<ApiResult>;

@@ -1,4 +1,7 @@
-import { Button, Card, Form, Input } from "antd";
+import { search } from "@/services/api/cylinder";
+import { CylinderSearchParam } from "@/services/model/request";
+import { CylinderSearchVO } from "@/services/model/response/cylinder";
+import { AutoComplete, Button, Card, Form, Input } from "antd";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { ImMobile } from "react-icons/im";
@@ -6,14 +9,28 @@ import { PiBarcodeBold } from "react-icons/pi";
 import "./index.scss";
 
 const App = () => {
+  const [barcode, setBarcode] = useState("");
+  const [barcodeOptions, setBarcodeOptions] = useState<{ value: string }[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const onBarcodeSearch = async (barcode: string) => {
+    if (!barcode) {
+      setBarcodeOptions([]);
+      return;
+    }
+    const param: CylinderSearchParam = {
+      barcode: barcode,
+    };
+    const voList: Array<CylinderSearchVO> = await search(param);
+    setBarcodeOptions(voList.map((item) => ({ value: item.barcode })) || []);
+  };
 
   const onEnrollFormFinish = () => {
     setLoading(true);
   };
 
   return (
-    <Card title="一瓶一码信息登记" headStyle={{ fontSize: "1.5rem" }} style={{ width: "95%" }}>
+    <Card title="一瓶一码信息登记" headStyle={{ fontSize: "1.5rem", textAlign: "center" }} style={{ width: "95%" }}>
       <Form
         name="form"
         size="large"
@@ -68,7 +85,14 @@ const App = () => {
             },
           ]}
         >
-          <Input allowClear prefix={<PiBarcodeBold />} placeholder="请输入气瓶条码" />
+          <AutoComplete
+            options={barcodeOptions}
+            value={barcode}
+            onChange={(barcode) => setBarcode(barcode)}
+            onSearch={onBarcodeSearch}
+          >
+            <Input allowClear style={{ fontSize: "inherit" }} prefix={<PiBarcodeBold />} placeholder="请输入气瓶条码" />
+          </AutoComplete>
         </Form.Item>
         <Form.Item className="enroll-form-item">
           <Button type="default" htmlType="reset" block>
