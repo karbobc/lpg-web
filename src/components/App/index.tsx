@@ -40,7 +40,7 @@ const App = () => {
       const values = enrollForm.getFieldsValue();
       const response = await enroll(values as EnrollParam);
       if (response.success) {
-        message.success("登记成功");
+        message.success("登记成功", 5);
         enrollForm.resetFields();
       }
     } finally {
