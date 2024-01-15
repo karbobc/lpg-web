@@ -1,4 +1,4 @@
-import { CylinderSearchParam } from "@/services/model/request";
+import { CylinderSearchParam } from "@/services/model/request/cylinder";
 import { ApiResult } from "@/services/model/response/base";
 import { CylinderSearchVO } from "@/services/model/response/cylinder";
 import request from "@/services/request.ts";
