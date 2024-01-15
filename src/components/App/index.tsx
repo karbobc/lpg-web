@@ -90,7 +90,7 @@ const App = () => {
                 },
               ]}
             >
-              <Input type="number" allowClear prefix={<ImMobile />} placeholder="请输入手机号" />
+              <Input type="tel" allowClear prefix={<ImMobile />} placeholder="请输入手机号" />
             </Form.Item>
             <Form.Item
               name="address"
@@ -122,7 +122,7 @@ const App = () => {
               >
                 <Input.Search
                   allowClear
-                  type="number"
+                  type="text"
                   loading={barcodeSearchLoading}
                   style={{ fontSize: "inherit" }}
                   prefix={<PiBarcodeBold />}
