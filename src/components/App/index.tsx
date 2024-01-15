@@ -3,7 +3,7 @@ import { enroll } from "@/services/api/misc";
 import { CylinderSearchParam } from "@/services/model/request/cylinder";
 import { EnrollParam } from "@/services/model/request/misc";
 import { CylinderSearchVO } from "@/services/model/response/cylinder";
-import { AutoComplete, Button, Card, Form, Input, Spin, message } from "antd";
+import { App as AntdApp, AutoComplete, Button, Card, Form, Input, Spin } from "antd";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { ImMobile } from "react-icons/im";
@@ -11,6 +11,7 @@ import { PiBarcodeBold } from "react-icons/pi";
 import "./index.scss";
 
 const App = () => {
+  const { message } = AntdApp.useApp();
   const [enrollForm] = Form.useForm();
   const [barcode, setBarcode] = useState("");
   const [barcodeOptions, setBarcodeOptions] = useState<{ value: string }[]>([]);
