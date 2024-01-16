@@ -3,7 +3,7 @@ import { enroll } from "@/services/api/misc";
 import { CylinderSearchParam } from "@/services/model/request/cylinder";
 import { EnrollParam } from "@/services/model/request/misc";
 import { CylinderSearchVO } from "@/services/model/response/cylinder";
-import { AutoComplete, Button, Card, Form, Input, Spin, message } from "antd";
+import { AutoComplete, Button, Card, Form, Input, Modal, Result, Spin } from "antd";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { ImMobile } from "react-icons/im";
@@ -16,6 +16,7 @@ const App = () => {
   const [barcodeOptions, setBarcodeOptions] = useState<{ value: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [barcodeSearchLoading, setBarcodeSearchLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const onBarcodeSearch = async (barcode: string) => {
     if (!barcode) {
@@ -40,12 +41,20 @@ const App = () => {
       const values = enrollForm.getFieldsValue();
       const response = await enroll(values as EnrollParam);
       if (response.success) {
-        message.success("登记成功", 5);
-        enrollForm.resetFields();
+        showModal();
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
+  const hideModal = () => {
+    setModalOpen(false);
+    enrollForm.resetFields();
   };
 
   return (
@@ -142,6 +151,20 @@ const App = () => {
           </Form>
         </Card>
       </Spin>
+      <Modal
+        closable={false}
+        centered={true}
+        open={modalOpen}
+        footer={[
+          <div key="footer" style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Button key="ok" type="primary" onClick={hideModal}>
+              确认
+            </Button>
+          </div>,
+        ]}
+      >
+        {modalOpen ? <Result status="success" title="登记成功" /> : <></>}
+      </Modal>
     </div>
   );
 };
