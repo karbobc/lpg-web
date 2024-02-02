@@ -67,8 +67,8 @@ jobs:
         id: docker_meta
         with:
           images: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/lpg
-            ghcr.io/${{ github.repository_owner }}/lpg
+            ${{ secrets.DOCKER_HUB_USERNAME }}/lpg-web
+            ghcr.io/${{ github.repository_owner }}/lpg-web
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
