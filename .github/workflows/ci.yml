@@ -56,6 +56,9 @@ jobs:
     needs:
       - build-lgp-web
     steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
       - name: Cache Docker layers
         uses: actions/cache@v4
         with:
