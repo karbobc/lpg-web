@@ -7,6 +7,6 @@ RUN set -x \
     && rm -f /usr/share/nginx/html/*
 
 COPY ./nginx /etc/nginx/conf.d/ 
-COPY ./build /usr/share/nginx/html/
+COPY ./target /usr/share/nginx/html/
 
 CMD ["nginx", "-g", "daemon off;"]
