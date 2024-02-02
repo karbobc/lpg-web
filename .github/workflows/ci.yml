@@ -5,6 +5,10 @@ on:
     tags: [ "v*" ]
   workflow_dispatch:
 
+
+env:
+  VITE_WEBSITE_TITLE: ${{ vars.WEBSITE_TITLE }}
+
 jobs:
   build-lgp-web:
     name: Build LPG Web
