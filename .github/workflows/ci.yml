@@ -39,7 +39,7 @@ jobs:
 
       - name: Install dependencies and build
         env:
-          VITE_WEBSITE_TITLE: ${{ vars.WEBSITE_TITLE }}
+          VITE_WEBSITE_TITLE: ${{ secrets.VITE_WEBSITE_TITLE }}
         run: |
           pnpm install --frozen-lockfile
           pnpm build
