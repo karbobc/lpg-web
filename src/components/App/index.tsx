@@ -61,7 +61,7 @@ const App = () => {
     <div className="enroll-container">
       <Spin spinning={loading}>
         <Card
-          title="一瓶一码信息登记"
+          title="一瓶一码实名登记"
           headStyle={{ fontSize: "1.5rem", textAlign: "center" }}
           style={{
             width: "95%",
