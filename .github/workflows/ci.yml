@@ -86,8 +86,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          pattern: lpg-web-artifact-*
-          path: target
+          name: lpg-web-artifact-${{ runner.os }}
+          path: dist
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -99,4 +99,4 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           cache-from: type=gha
-          cache-to: type=gha
+          cache-to: type=gha,mode=max

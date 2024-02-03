@@ -61,8 +61,8 @@ const App = () => {
     <div className="enroll-container">
       <Spin spinning={loading}>
         <Card
-          title="一瓶一码信息登记"
-          headStyle={{ fontSize: "1.5rem", textAlign: "center" }}
+          title="一瓶一码实名登记"
+          headStyle={{ fontSize: "1.2rem", textAlign: "center" }}
           style={{
             width: "95%",
             margin: "auto",
@@ -110,7 +110,7 @@ const App = () => {
                 },
               ]}
             >
-              <Input allowClear prefix={<AiFillHome />} placeholder="请输入现住地址" />
+              <Input allowClear prefix={<AiFillHome />} placeholder="现住地址 (例XX县XX镇XX村XX屯)" />
             </Form.Item>
             <Form.Item
               name="barcode"
