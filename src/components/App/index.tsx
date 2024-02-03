@@ -62,7 +62,7 @@ const App = () => {
       <Spin spinning={loading}>
         <Card
           title="一瓶一码实名登记"
-          headStyle={{ fontSize: "1.5rem", textAlign: "center" }}
+          headStyle={{ fontSize: "1.2rem", textAlign: "center" }}
           style={{
             width: "95%",
             margin: "auto",
