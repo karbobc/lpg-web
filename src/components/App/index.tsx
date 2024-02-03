@@ -110,7 +110,7 @@ const App = () => {
                 },
               ]}
             >
-              <Input allowClear prefix={<AiFillHome />} placeholder="请输入现住地址" />
+              <Input allowClear prefix={<AiFillHome />} placeholder="现住地址 (例XX县XX镇XX村XX屯)" />
             </Form.Item>
             <Form.Item
               name="barcode"
