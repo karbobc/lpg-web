@@ -87,7 +87,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lpg-web-artifact-${{ runner.os }}
-          path: target
+          path: dist
 
       - name: Build and push
         uses: docker/build-push-action@v5
