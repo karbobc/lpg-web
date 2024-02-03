@@ -3,6 +3,7 @@ name: LPG Web CI
 on:
   push:
     tags: [ "v*" ]
+    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
