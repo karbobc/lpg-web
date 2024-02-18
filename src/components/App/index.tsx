@@ -157,7 +157,7 @@ const App = () => {
         open={modalOpen}
         footer={[
           <div key="footer" style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Button key="ok" type="primary" onClick={hideModal}>
+            <Button key="ok" size="large" type="primary" onClick={hideModal}>
               确认
             </Button>
           </div>,
