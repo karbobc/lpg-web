@@ -3,7 +3,7 @@ import { enroll } from "@/services/api/misc";
 import { CylinderSearchParam } from "@/services/model/request/cylinder";
 import { EnrollParam } from "@/services/model/request/misc";
 import { CylinderSearchVO } from "@/services/model/response/cylinder";
-import { AutoComplete, Button, Card, Form, Input, Modal, Result, Spin } from "antd";
+import { AutoComplete, Button, Card, Form, Input, Modal, Popconfirm, Result, Spin, Tooltip } from "antd";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { ImMobile } from "react-icons/im";
@@ -62,7 +62,7 @@ const App = () => {
       <Spin spinning={loading}>
         <Card
           title="一瓶一码实名登记"
-          headStyle={{ fontSize: "1.2rem", textAlign: "center" }}
+          headStyle={{ fontSize: "2.0rem", textAlign: "center" }}
           style={{
             width: "95%",
             margin: "auto",
@@ -110,7 +110,13 @@ const App = () => {
                 },
               ]}
             >
-              <Input allowClear prefix={<AiFillHome />} placeholder="现住地址 (例XX县XX镇XX村XX屯)" />
+              <Tooltip
+                title="XX县XX镇/乡XX村/社区XX屯/街/区/路/巷"
+                trigger={["focus"]}
+                overlayInnerStyle={{ fontSize: "larger" }}
+              >
+                <Input allowClear prefix={<AiFillHome />} placeholder="现住地址" />
+              </Tooltip>
             </Form.Item>
             <Form.Item
               name="barcode"
@@ -139,9 +145,16 @@ const App = () => {
               </AutoComplete>
             </Form.Item>
             <Form.Item className="enroll-form-item">
-              <Button type="default" htmlType="reset" block>
-                清空
-              </Button>
+              <Popconfirm
+                title="您确认要清空全部内容吗？"
+                okText="确定"
+                cancelText="取消"
+                onConfirm={() => enrollForm.resetFields()}
+              >
+                <Button type="default" block>
+                  清空
+                </Button>
+              </Popconfirm>
             </Form.Item>
             <Form.Item className="enroll-form-item">
               <Button loading={loading} type="primary" htmlType="submit" block>
@@ -157,7 +170,7 @@ const App = () => {
         open={modalOpen}
         footer={[
           <div key="footer" style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Button key="ok" type="primary" onClick={hideModal}>
+            <Button key="ok" size="large" type="primary" onClick={hideModal}>
               确认
             </Button>
           </div>,
