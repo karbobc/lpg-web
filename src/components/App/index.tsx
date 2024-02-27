@@ -3,7 +3,7 @@ import { enroll } from "@/services/api/misc";
 import { CylinderSearchParam } from "@/services/model/request/cylinder";
 import { EnrollParam } from "@/services/model/request/misc";
 import { CylinderSearchVO } from "@/services/model/response/cylinder";
-import { AutoComplete, Button, Card, Form, Input, Modal, Result, Spin } from "antd";
+import { AutoComplete, Button, Card, Form, Input, Modal, Popconfirm, Result, Spin } from "antd";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { ImMobile } from "react-icons/im";
@@ -139,9 +139,16 @@ const App = () => {
               </AutoComplete>
             </Form.Item>
             <Form.Item className="enroll-form-item">
-              <Button type="default" htmlType="reset" block>
-                清空
-              </Button>
+              <Popconfirm
+                title="您确认要清空全部内容吗？"
+                okText="确定"
+                cancelText="取消"
+                onConfirm={() => enrollForm.resetFields()}
+              >
+                <Button type="default" block>
+                  清空
+                </Button>
+              </Popconfirm>
             </Form.Item>
             <Form.Item className="enroll-form-item">
               <Button loading={loading} type="primary" htmlType="submit" block>
