@@ -100,24 +100,24 @@ const App = () => {
             >
               <Input type="tel" allowClear prefix={<ImMobile />} placeholder="请输入手机号" />
             </Form.Item>
-            <Form.Item
-              name="address"
-              className="enroll-form-item"
-              rules={[
-                {
-                  required: true,
-                  message: "现住地址不能为空",
-                },
-              ]}
+            <Tooltip
+              title="XX县XX镇/乡XX村/社区XX屯/街/区/路/巷"
+              trigger={["focus"]}
+              overlayInnerStyle={{ fontSize: "larger" }}
             >
-              <Tooltip
-                title="XX县XX镇/乡XX村/社区XX屯/街/区/路/巷"
-                trigger={["focus"]}
-                overlayInnerStyle={{ fontSize: "larger" }}
+              <Form.Item
+                name="address"
+                className="enroll-form-item"
+                rules={[
+                  {
+                    required: true,
+                    message: "现住地址不能为空",
+                  },
+                ]}
               >
                 <Input allowClear prefix={<AiFillHome />} placeholder="现住地址" />
-              </Tooltip>
-            </Form.Item>
+              </Form.Item>
+            </Tooltip>
             <Form.Item
               name="barcode"
               className="enroll-form-item"
@@ -157,7 +157,13 @@ const App = () => {
               </Popconfirm>
             </Form.Item>
             <Form.Item className="enroll-form-item">
-              <Button loading={loading} type="primary" htmlType="submit" block>
+              <Button
+                loading={loading}
+                type="primary"
+                htmlType="submit"
+                onClick={() => console.log(enrollForm.getFieldsValue())}
+                block
+              >
                 提交
               </Button>
             </Form.Item>
