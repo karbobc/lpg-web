@@ -157,13 +157,7 @@ const App = () => {
               </Popconfirm>
             </Form.Item>
             <Form.Item className="enroll-form-item">
-              <Button
-                loading={loading}
-                type="primary"
-                htmlType="submit"
-                onClick={() => console.log(enrollForm.getFieldsValue())}
-                block
-              >
+              <Button loading={loading} type="primary" htmlType="submit" block>
                 提交
               </Button>
             </Form.Item>
