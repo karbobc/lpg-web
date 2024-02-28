@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <AntdApp>
+    <AntdApp style={{ width: "100%" }}>
       <App />
     </AntdApp>
   </React.StrictMode>,
