@@ -2,8 +2,9 @@ import { search } from "@/services/api/cylinder";
 import { enroll } from "@/services/api/misc";
 import { CylinderSearchParam } from "@/services/model/request/cylinder";
 import { EnrollParam } from "@/services/model/request/misc";
+import { ApiResult } from "@/services/model/response/base";
 import { CylinderSearchVO } from "@/services/model/response/cylinder";
-import { AutoComplete, Button, Card, Form, Input, Modal, Popconfirm, Result, Spin, Tooltip } from "antd";
+import { AutoComplete, Button, Card, Form, Input, Modal, Popconfirm, Result, Spin, Tooltip, message } from "antd";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { ImMobile } from "react-icons/im";
@@ -17,6 +18,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [barcodeSearchLoading, setBarcodeSearchLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [result, setResult] = useState<ApiResult>();
 
   const onBarcodeSearch = async (barcode: string) => {
     if (!barcode) {
@@ -30,6 +32,8 @@ const App = () => {
       };
       const voList: Array<CylinderSearchVO> = await search(param);
       setBarcodeOptions(voList.map((item) => ({ value: item.barcode })) || []);
+    } catch (e) {
+      message.error("查询失败！！！");
     } finally {
       setBarcodeSearchLoading(false);
     }
@@ -40,21 +44,18 @@ const App = () => {
     try {
       const values = enrollForm.getFieldsValue();
       const response = await enroll(values as EnrollParam);
-      if (response.success) {
-        showModal();
-      }
+      setResult(response);
     } finally {
+      setModalOpen(true);
       setLoading(false);
     }
   };
 
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
   const hideModal = () => {
     setModalOpen(false);
-    enrollForm.resetFields();
+    if (result?.success) {
+      enrollForm.resetFields();
+    }
   };
 
   return (
@@ -176,7 +177,14 @@ const App = () => {
           </div>,
         ]}
       >
-        {modalOpen ? <Result status="success" title="登记成功" /> : <></>}
+        {result ? (
+          <Result
+            status={result?.success ? "success" : "error"}
+            title={result?.success ? "登记成功" : result?.message}
+          />
+        ) : (
+          <Result status="error" title="发生未知异常" />
+        )}
       </Modal>
     </div>
   );

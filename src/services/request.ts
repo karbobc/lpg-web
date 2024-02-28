@@ -63,14 +63,13 @@ client.interceptors.response.use(
       // 文本响应, 非文件流响应
       result = response.data;
     }
-    // 处理 JSON 响应
-    if (!result.success) {
-      toast.error(result.message || "接口请求失败!!!");
-    }
     return result as unknown as AxiosResponse<ApiResult>;
   },
   (error) => {
-    toast.error(error.message || "接口请求失败!!!");
+    console.log("请求异常");
+    console.log(error);
+    console.log("\n");
+    return error;
   },
 );
 
