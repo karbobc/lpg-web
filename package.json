@@ -1,7 +1,7 @@
 {
   "name": "lpg-web",
   "private": true,
-  "version": "0.0.7",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -32,6 +32,7 @@
     "terser": "^5.27.0",
     "typescript": "^5.2.2",
     "vite": "^5.1.2",
+    "vite-plugin-eruda": "^1.0.1",
     "vite-plugin-mkcert": "^1.17.3",
     "vite-tsconfig-paths": "^4.2.3"
   },

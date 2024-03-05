@@ -1,6 +1,7 @@
 import react from "@vitejs/plugin-react";
 import * as process from "process";
 import { UserConfig, defineConfig, loadEnv } from "vite";
+import eruda from "vite-plugin-eruda";
 import mkcert from "vite-plugin-mkcert";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -10,7 +11,7 @@ export default defineConfig((config: UserConfig) => {
   const env = loadEnv(config.mode, process.cwd());
 
   return {
-    plugins: [tsconfigPaths(), react(), mkcert()],
+    plugins: [tsconfigPaths(), react(), mkcert(), eruda()],
     server: {
       proxy: {
         "/api": {

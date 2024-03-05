@@ -1,3 +1,4 @@
+import QrCodeScanner from "@/components/QrCodeScanner";
 import { search } from "@/services/api/cylinder";
 import { enroll } from "@/services/api/misc";
 import { CylinderSearchParam } from "@/services/model/request/cylinder";
@@ -9,6 +10,7 @@ import {
   AutoComplete,
   Button,
   Card,
+  Flex,
   Form,
   Input,
   Modal,
@@ -17,21 +19,24 @@ import {
   Spin,
   Tooltip,
 } from "antd";
+import { Html5QrcodeScanType, Html5QrcodeSupportedFormats } from "html5-qrcode";
 import { useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
+import { FaPowerOff } from "react-icons/fa6";
 import { ImMobile } from "react-icons/im";
 import { PiBarcodeBold } from "react-icons/pi";
+import { TbSquareLetterR } from "react-icons/tb";
 import "./index.scss";
 
 const App = () => {
   const { message } = AntdApp.useApp();
   const [enrollForm] = Form.useForm();
-  const [barcode, setBarcode] = useState("");
   const [barcodeOptions, setBarcodeOptions] = useState<{ value: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [barcodeSearchLoading, setBarcodeSearchLoading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [result, setResult] = useState<ApiResult>();
+  const [enrollResult, setEnrollResult] = useState<ApiResult>();
+  const [enrollResultModalOpen, setEnrollResultModalOpen] = useState(false);
+  const [scannerModalOpen, setScannerModalOpen] = useState(false);
 
   const onBarcodeSearch = async (barcode: string) => {
     if (!barcode) {
@@ -57,18 +62,41 @@ const App = () => {
     try {
       const values = enrollForm.getFieldsValue();
       const response = await enroll(values as EnrollParam);
-      setResult(response);
+      setEnrollResult(response);
     } finally {
-      setModalOpen(true);
+      setEnrollResultModalOpen(true);
       setLoading(false);
     }
   };
 
-  const hideModal = () => {
-    setModalOpen(false);
-    if (result?.success) {
+  const hideEnrollResultModal = () => {
+    setEnrollResultModalOpen(false);
+    if (enrollResult?.success) {
       enrollForm.resetFields();
     }
+  };
+
+  const hideScannerModal = () => {
+    setScannerModalOpen(false);
+  };
+
+  const onQrCodeScanButtonClick = () => {
+    enrollForm.resetFields(["barcode"]);
+    setScannerModalOpen(true);
+  };
+
+  const onQrCodeScannedSuccess = (content: string) => {
+    console.log(`扫码内容识别成功: ${content}`);
+    let barcode = content;
+    if (content.startsWith("http")) {
+      barcode = content.split("|")[1];
+    }
+    if (barcode === enrollForm.getFieldValue("barcode")) {
+      return;
+    }
+    message.success("条码识别成功");
+    enrollForm.setFieldValue("barcode", barcode);
+    setScannerModalOpen(false);
   };
 
   return (
@@ -132,31 +160,32 @@ const App = () => {
                 <Input allowClear prefix={<AiFillHome />} placeholder="现住地址" />
               </Form.Item>
             </Tooltip>
-            <Form.Item
-              name="barcode"
-              className="enroll-form-item"
-              rules={[
-                {
-                  required: true,
-                  message: "气瓶条码不能为空",
-                },
-              ]}
-            >
-              <AutoComplete
-                options={barcodeOptions}
-                value={barcode}
-                onChange={(barcode) => setBarcode(barcode)}
-                onSearch={onBarcodeSearch}
-              >
-                <Input.Search
-                  allowClear
-                  type="text"
-                  loading={barcodeSearchLoading}
-                  style={{ fontSize: "inherit" }}
-                  prefix={<PiBarcodeBold />}
-                  placeholder="请输入气瓶条码"
-                />
-              </AutoComplete>
+            <Form.Item className="enroll-form-item">
+              <Flex gap="small">
+                <Form.Item
+                  noStyle
+                  name="barcode"
+                  style={{ width: "calc(100% - 50px)" }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "气瓶条码不能为空",
+                    },
+                  ]}
+                >
+                  <AutoComplete options={barcodeOptions} onSearch={onBarcodeSearch}>
+                    <Input.Search
+                      allowClear
+                      type="text"
+                      loading={barcodeSearchLoading}
+                      style={{ fontSize: "inherit" }}
+                      prefix={<TbSquareLetterR />}
+                      placeholder="请输入气瓶条码"
+                    />
+                  </AutoComplete>
+                </Form.Item>
+                <Button size="large" onClick={onQrCodeScanButtonClick} icon={<PiBarcodeBold />} />
+              </Flex>
             </Form.Item>
             <Form.Item className="enroll-form-item">
               <Popconfirm
@@ -181,23 +210,49 @@ const App = () => {
       <Modal
         closable={false}
         centered={true}
-        open={modalOpen}
+        open={enrollResultModalOpen}
         footer={[
-          <div key="footer" style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Button key="ok" size="large" type="primary" onClick={hideModal}>
+          <div
+            key="enroll-modal-footer"
+            style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
+            <Button key="enroll-modal-ok" size="large" type="primary" onClick={hideEnrollResultModal}>
               确认
             </Button>
           </div>,
         ]}
       >
-        {result ? (
+        {enrollResult ? (
           <Result
-            status={result?.success ? "success" : "error"}
-            title={result?.success ? "登记成功" : result?.message}
+            status={enrollResult?.success ? "success" : "error"}
+            title={enrollResult?.success ? "登记成功" : enrollResult?.message}
           />
         ) : (
           <Result status="error" title="发生未知异常" />
         )}
+      </Modal>
+      <Modal
+        destroyOnClose={true}
+        closable={false}
+        centered={true}
+        open={scannerModalOpen}
+        footer={[
+          <Flex key="scanner-modal-footer" justify="center">
+            <Button danger key="scanner-modal-cancel" size="large" icon={<FaPowerOff />} onClick={hideScannerModal} />
+          </Flex>,
+        ]}
+      >
+        <QrCodeScanner
+          config={{
+            fps: 15,
+            qrbox: 300,
+            verbose: false,
+            formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128, Html5QrcodeSupportedFormats.QR_CODE],
+            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            showTorchButtonIfSupported: true,
+          }}
+          onSuccess={onQrCodeScannedSuccess}
+        />
       </Modal>
     </div>
   );
