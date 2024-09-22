@@ -8,6 +8,6 @@ RUN set -x \
 
 COPY ./nginx /etc/nginx/conf.d/ 
 COPY ./dist /usr/share/nginx/html/
-COPY ./entrypoint /docker-entrypoint.sh/
+COPY ./entrypoint /docker-entrypoint.d/
 
 CMD ["nginx", "-g", "daemon off;"]
