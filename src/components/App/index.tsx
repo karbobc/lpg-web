@@ -20,7 +20,7 @@ import {
   Tooltip,
 } from "antd";
 import { Html5QrcodeScanType, Html5QrcodeSupportedFormats } from "html5-qrcode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillHome, AiOutlineUser } from "react-icons/ai";
 import { FaPowerOff } from "react-icons/fa6";
 import { ImMobile } from "react-icons/im";
@@ -98,6 +98,16 @@ const App = () => {
     enrollForm.setFieldValue("barcode", barcode);
     setScannerModalOpen(false);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    enrollForm.setFieldsValue({
+      name: params.get("name"),
+      mobile: params.get("mobile"),
+      address: params.get("address"),
+      barcode: params.get("barcode"),
+    });
+  }, [enrollForm]);
 
   return (
     <div className="enroll-container">
