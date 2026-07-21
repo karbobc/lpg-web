@@ -19,7 +19,7 @@
     "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.4.1",
+    "@biomejs/biome": "2.5.5",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@types/react": "^18.2.43",
