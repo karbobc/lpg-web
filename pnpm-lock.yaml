@@ -10,7 +10,7 @@ dependencies:
     version: 5.12.7(react-dom@18.2.0)(react@18.2.0)
   axios:
     specifier: ^1.15.0
-    version: 1.18.0
+    version: 1.18.1
   html5-qrcode:
     specifier: ^2.3.8
     version: 2.3.8
@@ -1468,8 +1468,8 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
-  /axios@1.18.0:
-    resolution: {integrity: sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==}
+  /axios@1.18.1:
+    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
