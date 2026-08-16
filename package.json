@@ -31,7 +31,7 @@
     "sass": "^1.69.7",
     "terser": "^5.27.0",
     "typescript": "^5.2.2",
-    "vite": "^6.4.2",
+    "vite": "^8.0.0",
     "vite-plugin-eruda": "^1.0.1",
     "vite-plugin-mkcert": "^2.0.0",
     "vite-tsconfig-paths": "^6.0.0"
