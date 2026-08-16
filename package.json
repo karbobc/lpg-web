@@ -10,7 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "antd": "^5.12.7",
+    "antd": "^6.0.0",
     "axios": "^1.15.0",
     "html5-qrcode": "^2.3.8",
     "react": "^18.2.0",
