@@ -33,7 +33,7 @@
     "typescript": "^5.2.2",
     "vite": "^6.4.2",
     "vite-plugin-eruda": "^1.0.1",
-    "vite-plugin-mkcert": "^1.17.12",
+    "vite-plugin-mkcert": "^2.0.0",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "lint-staged": {
